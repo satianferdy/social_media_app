@@ -1,12 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/my_button.dart';
 import 'package:social_media_app/components/my_textfield.dart';
+import 'package:social_media_app/helper/helper_functions.dart';
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   final void Function()? onTab;
 
-  RegisterPage({super.key, required this.onTab});
+  const RegisterPage({super.key, required this.onTab});
 
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
   // text editing controller
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
@@ -14,7 +21,41 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController confirmPwController = TextEditingController();
 
   // register method
-  void register() {}
+  void registerUser() async {
+    // show loading indicator
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+    // check if password and confirm password is the same
+    if (passwordController.text != confirmPwController.text) {
+      // pop loading indicator
+      Navigator.pop(context);
+      // show error message
+      displayErrorMessage(
+          context, "Password and Confirm Password is not the same");
+    } else {
+      // try creating user
+      try {
+        // creatu the user
+        UserCredential? userCredential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+
+        // pop loading indicator
+        Navigator.pop(context);
+      } on FirebaseAuthException catch (e) {
+        // pop loading indicator
+        Navigator.pop(context);
+        // show error message
+        displayErrorMessage(context, e.code);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +141,7 @@ class RegisterPage extends StatelessWidget {
               // register button
               MyButton(
                 text: "Register",
-                onTap: () {},
+                onTap: registerUser,
               ),
 
               const SizedBox(height: 20),
@@ -116,7 +157,7 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: onTab,
+                    onTap: widget.onTab,
                     child: const Text(
                       "Login here",
                       style: TextStyle(

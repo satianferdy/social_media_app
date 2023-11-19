@@ -1,18 +1,53 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:social_media_app/components/my_button.dart';
 import 'package:social_media_app/components/my_textfield.dart';
+import 'package:social_media_app/helper/helper_functions.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   final void Function()? onTab;
 
-  LoginPage({super.key, required this.onTab});
+  const LoginPage({super.key, required this.onTab});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   // text editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   // login method
-  void login() {}
+  void login() async {
+    // show loading indicator
+    showDialog(
+      context: context,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    // try signing in
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      // pop loading indicator
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+
+      // display any error message
+    } on FirebaseAuthException catch (e) {
+      // pop loading indicator
+      Navigator.pop(context);
+      // show error message
+      displayErrorMessage(context, e.code);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +115,7 @@ class LoginPage extends StatelessWidget {
               //sign in button
               MyButton(
                 text: "Sign In",
-                onTap: () {},
+                onTap: login,
               ),
 
               const SizedBox(height: 20),
@@ -96,7 +131,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: onTab,
+                    onTap: widget.onTab,
                     child: const Text(
                       "Register here",
                       style: TextStyle(
