@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1096722861505",
+    "project_id": "simple-soc-app",
+    "storage_bucket": "simple-soc-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096722861505:android:7278ae6b3e545369aff340",
+        "android_client_info": {
+          "package_name": "com.example.social_media_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhO-mLI_wlqnr-40TCHQ0DtyGtcEo17iY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
