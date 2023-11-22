@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
+
+  void logout() {
+    FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +63,11 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
+                    // pop drawer
+                    Navigator.pop(context);
+
                     // navigate to profile screen
-                    Navigator.pushNamed(context, '/profile');
+                    Navigator.pushNamed(context, '/profile_page');
                   },
                 ),
               ),
@@ -79,8 +87,11 @@ class MyDrawer extends StatelessWidget {
                     ),
                   ),
                   onTap: () {
+                    // pop drawer
+                    Navigator.pop(context);
+
                     // navigate to users screen
-                    Navigator.pushNamed(context, '/users');
+                    Navigator.pushNamed(context, '/users_page');
                   },
                 ),
               ),
@@ -104,34 +115,14 @@ class MyDrawer extends StatelessWidget {
               onTap: () {
                 // logout
                 Navigator.pop(context);
-                Navigator.pushNamed(context, '/login');
+
+                // logout
+                logout();
               },
             ),
           ),
         ],
       ),
-      // child: ListView(
-      //   children: [
-      //     const DrawerHeader(
-      //       decoration: BoxDecoration(
-      //         color: Colors.blue,
-      //       ),
-      //       child: Text('Drawer Header'),
-      //     ),
-      //     ListTile(
-      //       title: const Text('Item 1'),
-      //       onTap: () {
-      //         Navigator.pop(context);
-      //       },
-      //     ),
-      //     ListTile(
-      //       title: const Text('Item 2'),
-      //       onTap: () {
-      //         Navigator.pop(context);
-      //       },
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
