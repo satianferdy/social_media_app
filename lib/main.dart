@@ -24,11 +24,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const AuthPage(),
-      theme: lightMode,
+      theme: darkMode,
       darkTheme: darkMode,
       routes: {
         '/login_register_page': (context) => const LoginOrRegister(),
-        '/home_page': (context) => const HomePage(),
+        '/home_page': (context) => HomePage(),
         '/profile_page': (context) => ProfilePage(),
         '/users_page': (context) => const UsersPage(),
       },
