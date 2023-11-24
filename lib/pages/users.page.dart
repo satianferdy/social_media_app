@@ -45,6 +45,26 @@ class UsersPage extends StatelessWidget {
                   ],
                 ),
               ),
+
+              const SizedBox(height: 20),
+
+              // title
+              const Padding(
+                padding: EdgeInsets.only(left: 25.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'U S E R S - L I S T',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
               Expanded(
                 child: ListView.builder(
                   itemCount: users.length,

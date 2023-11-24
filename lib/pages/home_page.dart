@@ -31,7 +31,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('W A L L'),
+        title: const Padding(
+          padding: EdgeInsets.only(left: 100.0),
+          child: Text('W A L L'),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
